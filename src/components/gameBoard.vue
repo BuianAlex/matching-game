@@ -9,7 +9,10 @@
         v-if="!isGameStarted && sholdBeFind != 0"
         @start="startGame"
       />
-      <won-popup v-if="sholdBeFind == 0" />
+      <won-popup
+        v-if="sholdBeFind == 0"
+        v-bind:result="{ gameTime, calcMoves }"
+      />
       <!-- <won-popup /> -->
       <ul class="cards-list">
         <li
@@ -53,7 +56,7 @@
 
 <script>
   import moment from 'moment';
-  import generator from './../utils/generator';
+  import { generator, dateFormat } from './../utils';
   import StartPopup from './startPopup';
   import WonPopup from './wonPopup';
   import { sizeButtons } from './../config/gameConfig';
@@ -149,15 +152,7 @@
       },
     },
     filters: {
-      dateFormat: function(t) {
-        let seconds = Math.floor((t / 1000) % 60);
-        let minutes = Math.floor((t / 1000 / 60) % 60);
-        let hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-        // let days = Math.floor(t / (1000 * 60 * 60 * 24));
-        return `${String(hours).length === 1 ? `0${hours}` : hours}:${
-          String(minutes).length === 1 ? `0${minutes}` : minutes
-        }:${String(seconds).length === 1 ? `0${seconds}` : seconds}`;
-      },
+      dateFormat,
     },
     beforeMount() {
       this.gameCards = this.createCards();
@@ -252,7 +247,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 3rem;
+      @media (min-width: 576px) {
+        font-size: 3rem;
+      }
+      font-size: 2rem;
     }
     &-with-pair {
       opacity: 0.6;

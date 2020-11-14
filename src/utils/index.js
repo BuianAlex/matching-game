@@ -1,4 +1,4 @@
-const generator = (cardListLength) => {
+export function generator(cardListLength) {
   let resultArray = [];
 
   const setRandomPosition = (resultArray, index) => {
@@ -20,6 +20,14 @@ const generator = (cardListLength) => {
     }
   }
   return resultArray;
-};
+}
 
-export default generator;
+export function dateFormat(t) {
+  let seconds = Math.floor((t / 1000) % 60);
+  let minutes = Math.floor((t / 1000 / 60) % 60);
+  let hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  // let days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return `${String(hours).length === 1 ? `0${hours}` : hours}:${
+    String(minutes).length === 1 ? `0${minutes}` : minutes
+  }:${String(seconds).length === 1 ? `0${seconds}` : seconds}`;
+}
