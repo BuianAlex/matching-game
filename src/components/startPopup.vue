@@ -1,6 +1,6 @@
 <template>
   <div class="popup">
-    <button class="btn" @click="startGame">start</button>
+    <button class="btn-default" @click="startGame">start</button>
   </div>
 </template>
 
@@ -28,28 +28,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 20%;
-      height: 20%;
-      font-size: 3vw;
       background-color: #2196f3;
-      border: none;
       color: #fff;
-    }
-    .btn {
-      background-color: #fff8dc;
-      border: none;
-      color: #2196f3;
-      text-transform: uppercase;
-      transition: all 0.2s ease-in-out;
-      border-radius: 2px;
-      letter-spacing: 0.03em;
-      font-size: 0.875rem;
-      overflow: hidden;
-      cursor: pointer;
-      &:hover {
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
-        animation-duration: 0.0001s;
-      }
     }
   }
 </style>

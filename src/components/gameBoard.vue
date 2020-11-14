@@ -2,10 +2,15 @@
   <div>
     <div class="game-board">
       <div class="game-header">
-        <span>{{ gameTime | dateFormat }}</span>
+        <span>time: {{ gameTime | dateFormat }}</span>
         <span>moves: {{ calcMoves }}</span>
       </div>
-      <start-popup v-if="!isGameStarted" @start="startGame" />
+      <start-popup
+        v-if="!isGameStarted && sholdBeFind != 0"
+        @start="startGame"
+      />
+      <won-popup v-if="sholdBeFind == 0" />
+      <!-- <won-popup /> -->
       <ul class="cards-list">
         <li
           class="card"
@@ -21,13 +26,19 @@
       </ul>
     </div>
     <div class="restart-wrapper">
-      <button class="styled-button" @click="setBoardSize(12)">restart</button>
-    </div>
-
-    <div class="button-wrap">
-      <h2>Game settings</h2>
       <button
         class="styled-button"
+        @click="setNewGame"
+        v-if="isGameStarted || sholdBeFind == 0"
+      >
+        restart
+      </button>
+    </div>
+
+    <div class="settings">
+      <h2>Game settings</h2>
+      <button
+        class="btn-default"
         v-for="(btn, index) in sizeButtons"
         :key="index"
         :class="cardClass"
@@ -44,11 +55,13 @@
   import moment from 'moment';
   import generator from './../utils/generator';
   import StartPopup from './startPopup';
+  import WonPopup from './wonPopup';
   import { sizeButtons } from './../config/gameConfig';
 
   export default {
     components: {
       'start-popup': StartPopup,
+      'won-popup': WonPopup,
     },
     data() {
       return {
@@ -249,7 +262,7 @@
     // font-size: 3rem;
     color: #fff;
   }
-  .button-wrap {
+  .settings {
     position: relative;
     display: flex;
     justify-content: center;
@@ -270,6 +283,12 @@
       top: 0;
       text-transform: uppercase;
       font-size: 0.875rem;
+    }
+    button {
+      min-width: 100px;
+      color: #fff;
+      background-color: #2196f3;
+      margin: 0.375rem 1rem;
     }
   }
   .restart-wrapper {
