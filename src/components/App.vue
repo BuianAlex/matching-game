@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import Board from './components/gameBoard.vue';
+  import Board from './gameBoard.vue';
 
   export default {
     components: {
