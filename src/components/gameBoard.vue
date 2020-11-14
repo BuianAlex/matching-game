@@ -13,7 +13,6 @@
         v-if="sholdBeFind == 0"
         v-bind:result="{ gameTime, calcMoves }"
       />
-      <!-- <won-popup /> -->
       <ul class="cards-list">
         <li
           class="card"
@@ -30,14 +29,13 @@
     </div>
     <div class="restart-wrapper">
       <button
-        class="styled-button"
+        class="btn-default"
         @click="setNewGame"
         v-if="isGameStarted || sholdBeFind == 0"
       >
         restart
       </button>
     </div>
-
     <div class="settings">
       <h2>Game settings</h2>
       <button
@@ -55,11 +53,10 @@
 </template>
 
 <script>
-  import moment from 'moment';
   import { generator, dateFormat } from './../utils';
   import StartPopup from './startPopup';
   import WonPopup from './wonPopup';
-  import { sizeButtons } from './../config/gameConfig';
+  import { sizeButtons, gameSpeed } from './../config/gameConfig';
 
   export default {
     components: {
@@ -98,7 +95,6 @@
       setBoardSize: function(size) {
         this.boardSize = size;
         this.setNewGame();
-        console.log(this.gameCards);
         this.cardClass = `card-${size}`;
       },
       setNewGame: function() {
@@ -110,13 +106,12 @@
       },
       startGame: function() {
         this.isGameStarted = true;
-        this.startTime = moment();
+        this.startTime = Date.now();
         this.timer();
-        console.log('start');
       },
       timer: function() {
         if (this.isGameStarted) {
-          this.gameTime = moment() - this.startTime;
+          this.gameTime = Date.now() - this.startTime;
           setTimeout(this.timer, 1000);
         }
       },
@@ -133,13 +128,12 @@
                 cardTwo.isHidden = true;
                 cardOne.isHidden = true;
                 this.isClickOn = true;
-              }, 1000);
+              }, gameSpeed);
             } else {
               cardTwo.isHasPair = true;
               cardOne.isHasPair = true;
               this.sholdBeFind -= 1;
               this.isClickOn = true;
-              console.log(card);
             }
             this.userChoise = [];
             this.calcMoves += 1;
@@ -147,7 +141,6 @@
           if (this.sholdBeFind === 0) {
             this.isGameStarted = false;
           }
-          console.log(this.userChoise, this.calcMoves);
         }
       },
     },
@@ -161,9 +154,6 @@
 </script>
 
 <style lang="scss">
-  h3 {
-    text-align: center;
-  }
   .game-board {
     position: relative;
     width: 95%;
@@ -182,7 +172,7 @@
     margin: 1rem 0;
     text-align: center;
     line-height: 2rem;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
   .cards-list {
     display: flex;
@@ -191,7 +181,6 @@
     margin: 0;
     padding-left: 0.5%;
   }
-
   .card {
     display: block;
     position: relative;
@@ -226,7 +215,6 @@
       width: calc(18% - 1.25% - 12px);
     }
     &-42 {
-      // width: calc(17.5% - 1.5% - 14px);
       @media (max-width: 372px) {
         width: calc(18.5% - 1.5% - 14px);
       }
@@ -247,6 +235,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      color: #fff;
       @media (min-width: 576px) {
         font-size: 3rem;
       }
@@ -255,10 +244,6 @@
     &-with-pair {
       opacity: 0.6;
     }
-  }
-  .card-content {
-    // font-size: 3rem;
-    color: #fff;
   }
   .settings {
     position: relative;
@@ -292,42 +277,9 @@
   .restart-wrapper {
     margin: 1rem;
     text-align: center;
-  }
-  .styled-button {
-    min-width: 100px;
-    color: #fff;
-    background-color: #2196f3;
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.125rem;
-    text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
-    display: inline-block;
-    height: 2.25rem;
-    padding: 0 1.625rem;
-    margin: 0.375rem 1rem;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    text-align: center;
-    line-height: 2.25rem;
-    vertical-align: middle;
-    white-space: nowrap;
-    user-select: none;
-    font-size: 0.875rem;
-    font-family: inherit;
-    letter-spacing: 0.03em;
-    position: relative;
-    overflow: hidden;
-    &:hover {
-      box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.2);
-      animation-duration: 0.0001s;
-    }
-    &:disabled {
-      cursor: not-allowed;
-      pointer-events: none;
-      opacity: 0.6;
-      box-shadow: none;
+    button {
+      background-color: #2196f3;
+      color: #fff;
     }
   }
 </style>

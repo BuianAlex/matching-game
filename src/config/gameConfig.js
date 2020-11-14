@@ -6,3 +6,5 @@ export const sizeButtons = [
   { name: '6x6', size: 36 },
   { name: '7x6', size: 42 },
 ];
+
+export const gameSpeed = 600;

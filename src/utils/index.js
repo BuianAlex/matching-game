@@ -22,10 +22,10 @@ export function generator(cardListLength) {
   return resultArray;
 }
 
-export function dateFormat(t) {
-  let seconds = Math.floor((t / 1000) % 60);
-  let minutes = Math.floor((t / 1000 / 60) % 60);
-  let hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+export function dateFormat(time) {
+  let seconds = Math.floor((time / 1000) % 60);
+  let minutes = Math.floor((time / 1000 / 60) % 60);
+  let hours = Math.floor((time / (1000 * 60 * 60)) % 24);
   // let days = Math.floor(t / (1000 * 60 * 60 * 24));
   return `${String(hours).length === 1 ? `0${hours}` : hours}:${
     String(minutes).length === 1 ? `0${minutes}` : minutes

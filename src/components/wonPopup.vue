@@ -14,11 +14,6 @@
   import { dateFormat } from './../utils';
 
   export default {
-    methods: {
-      close: function() {
-        console.log('close');
-      },
-    },
     props: {
       result: Object,
     },
@@ -27,6 +22,7 @@
     },
   };
 </script>
+
 <style lang="scss">
   .wonPopup {
     position: absolute;
@@ -44,6 +40,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: #665100;
+      text-align: center;
     }
   }
 </style>

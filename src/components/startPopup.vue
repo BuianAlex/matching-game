@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  console.log(this);
   export default {
     methods: {
       startGame: function() {
