@@ -11,7 +11,7 @@
       />
       <won-popup
         v-if="sholdBeFind == 0"
-        v-bind:result="{ gameTime, calcMoves }"
+        v-bind:result="{ gameTime, calcMoves, compareRecults }"
       />
       <ul class="cards-list">
         <li
@@ -76,6 +76,7 @@
         calcMoves: 0,
         sholdBeFind: 0,
         isClickOn: true,
+        compareRecults: {},
       };
     },
     methods: {
@@ -102,6 +103,7 @@
         this.gameTime = 0;
         this.userChoise = [];
         this.calcMoves = 0;
+        this.compareRecults = {};
         this.gameCards = this.createCards();
       },
       startGame: function() {
@@ -139,7 +141,32 @@
             this.calcMoves += 1;
           }
           if (this.sholdBeFind === 0) {
+            this.saveResult();
             this.isGameStarted = false;
+          }
+        }
+      },
+      saveResult: function() {
+        const oldRecord = this.$store.state.records[this.boardSize];
+        if (oldRecord === undefined) {
+          this.compareRecults = { isRecord: true };
+          this.$store.commit('addRecord', {
+            boardName: this.boardSize,
+            result: { time: this.gameTime, moves: this.calcMoves },
+          });
+        } else {
+          console.log();
+          if (
+            oldRecord.time > this.gameTime &&
+            oldRecord.moves > this.calcMoves
+          ) {
+            this.compareRecults = { isRecord: true };
+            this.$store.commit('addRecord', {
+              boardName: this.boardSize,
+              result: { time: this.gameTime, moves: this.calcMoves },
+            });
+          } else {
+            this.compareRecults = { isRecord: false, oldRecord };
           }
         }
       },

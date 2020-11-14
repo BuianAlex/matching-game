@@ -6,6 +6,12 @@
         Your result: <b>{{ result.calcMoves }}</b> moves by
         <b>{{ result.gameTime | dateFormat }}</b>
       </p>
+      <p v-if="!result.compareRecults.isRecord">
+        Old record result:
+        <b>{{ result.compareRecults.oldRecord.moves }}</b> moves by
+        <b>{{ result.compareRecults.oldRecord.time | dateFormat }}</b>
+      </p>
+      <p v-else>NEW RECORD!!!</p>
     </div>
   </div>
 </template>
