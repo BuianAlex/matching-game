@@ -28,8 +28,8 @@
   body {
     color: #5f6368;
     font-family: 'Roboto', sans-serif;
-    font-size: 1rem;
     box-sizing: border-box;
+    min-width: 300px;
   }
   h1 {
     text-align: center;

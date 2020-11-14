@@ -30,19 +30,20 @@
       transform: translate(-50%, -50%);
       width: 20%;
       height: 20%;
-      font-size: 1.5rem;
+      font-size: 3vw;
       background-color: #2196f3;
       border: none;
       color: #fff;
     }
     .btn {
-      background-color: #2196f3;
+      background-color: #fff8dc;
       border: none;
-      color: #fff;
+      color: #2196f3;
       text-transform: uppercase;
       transition: all 0.2s ease-in-out;
       border-radius: 2px;
       letter-spacing: 0.03em;
+      font-size: 0.875rem;
       overflow: hidden;
       cursor: pointer;
       &:hover {

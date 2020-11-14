@@ -11,7 +11,7 @@
           class="card"
           v-for="(card, index) in gameCards"
           :key="index"
-          :class="cardClass"
+          :class="[cardClass, card.isHasPair ? 'card-with-pair' : '']"
           @click="showCard(card)"
         >
           <span v-if="!card.isHidden" class="card-content">
@@ -23,49 +23,18 @@
     <div class="restart-wrapper">
       <button class="styled-button" @click="setBoardSize(12)">restart</button>
     </div>
-    <h3>Set game bord size</h3>
+
     <div class="button-wrap">
+      <h2>Game settings</h2>
       <button
-        :disabled="boardSize == 12"
         class="styled-button"
-        @click="setBoardSize(12)"
+        v-for="(btn, index) in sizeButtons"
+        :key="index"
+        :class="cardClass"
+        :disabled="boardSize == btn.size"
+        @click="setBoardSize(btn.size)"
       >
-        4x3
-      </button>
-      <button
-        :disabled="boardSize == 16"
-        class="styled-button"
-        @click="setBoardSize(16)"
-      >
-        4x4
-      </button>
-      <button
-        :disabled="boardSize == 20"
-        class="styled-button"
-        @click="setBoardSize(20)"
-      >
-        5x4
-      </button>
-      <button
-        :disabled="boardSize == 30"
-        class="styled-button"
-        @click="setBoardSize(30)"
-      >
-        6x5
-      </button>
-      <button
-        :disabled="boardSize == 36"
-        class="styled-button"
-        @click="setBoardSize(36)"
-      >
-        6x6
-      </button>
-      <button
-        :disabled="boardSize == 42"
-        class="styled-button"
-        @click="setBoardSize(42)"
-      >
-        7x6
+        {{ btn.name }}
       </button>
     </div>
   </div>
@@ -76,7 +45,6 @@
   import generator from './../utils/generator';
   import StartPopup from './startPopup';
   import { sizeButtons } from './../config/gameConfig';
-  console.log(sizeButtons);
 
   export default {
     components: {
@@ -103,7 +71,11 @@
         const cardNames = generator(this.boardSize);
         this.sholdBeFind = this.boardSize / 2;
         cardNames.forEach((element) => {
-          gameCardsObjectArray.push({ value: element, isHidden: true });
+          gameCardsObjectArray.push({
+            value: element,
+            isHidden: true,
+            isHasPair: false,
+          });
         });
         return gameCardsObjectArray;
       },
@@ -119,7 +91,6 @@
         this.userChoise = [];
         this.calcMoves = 0;
         this.gameCards = this.createCards();
-        console.log(this);
       },
       startGame: function() {
         this.isGameStarted = true;
@@ -139,8 +110,8 @@
           this.userChoise.push(card);
           if (this.userChoise.length === 2) {
             this.isClickOn = false;
-            const cardOne = this.userChoise[0];
-            const cardTwo = this.userChoise[1];
+            let cardOne = this.userChoise[0];
+            let cardTwo = this.userChoise[1];
             if (cardOne.value !== cardTwo.value) {
               setTimeout(() => {
                 cardTwo.isHidden = true;
@@ -148,9 +119,12 @@
                 this.isClickOn = true;
               }, 1000);
             } else {
+              cardTwo.isHasPair = true;
+              cardOne.isHasPair = true;
               this.sholdBeFind -= 1;
+              this.isClickOn = true;
+              console.log(card);
             }
-
             this.userChoise = [];
             this.calcMoves += 1;
           }
@@ -218,7 +192,7 @@
     border: 1px solid #000;
     border-radius: 4px;
     cursor: pointer;
-    background-color: burlywood;
+    background-color: #2196f3;
     &-12 {
       width: calc(25% - 0.75% - 8px);
     }
@@ -226,16 +200,34 @@
       width: calc(25% - 0.75% - 8px);
     }
     &-20 {
+      @media (max-width: 317px) {
+        width: calc(21% - 1% - 10px);
+      }
       width: calc(20% - 1% - 10px);
     }
     &-30 {
+      @media (max-width: 372px) {
+        width: calc(21% - 1% - 10px);
+      }
       width: calc(18% - 1.25% - 12px);
     }
     &-36 {
+      @media (max-width: 372px) {
+        width: calc(21% - 1.5% - 14px);
+      }
       width: calc(18% - 1.25% - 12px);
     }
     &-42 {
-      width: calc(17.5% - 1.5% - 14px);
+      // width: calc(17.5% - 1.5% - 14px);
+      @media (max-width: 372px) {
+        width: calc(18.5% - 1.5% - 14px);
+      }
+      @media (min-width: 372px) {
+        width: calc(17.5% - 1.5% - 14px);
+      }
+      @media (min-width: 1001px) {
+        width: calc(16.5% - 1.5% - 14px);
+      }
     }
     &:after {
       content: '';
@@ -249,21 +241,43 @@
       transform: translate(-50%, -50%);
       font-size: 3rem;
     }
+    &-with-pair {
+      opacity: 0.6;
+    }
   }
   .card-content {
     // font-size: 3rem;
     color: #fff;
   }
   .button-wrap {
+    position: relative;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    background-color: cornsilk;
+    width: 95%;
+    margin: 0 auto;
+    padding: 50px 0 1rem;
+    border-radius: 4px;
+    @media (min-width: 768px) {
+      width: 50%;
+    }
+    @media (min-width: 1200px) {
+      width: 40%;
+    }
+    h2 {
+      position: absolute;
+      top: 0;
+      text-transform: uppercase;
+      font-size: 0.875rem;
+    }
   }
   .restart-wrapper {
     margin: 1rem;
     text-align: center;
   }
   .styled-button {
+    min-width: 100px;
     color: #fff;
     background-color: #2196f3;
     font-weight: 500;
