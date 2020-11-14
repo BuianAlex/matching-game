@@ -2,25 +2,27 @@
   <div class="wonPopup">
     <div class="wonPopup-message">
       <h1>Congrate you are Won!</h1>
-      <p>Your result: <b>10</b> moves by <b>00:00:00</b></p>
-      <p>Best result:</p>
-      <!-- <div class="wonPopup-btn">
-        <button class=" btn-default" @click="close">Play agan</button>
-      </div> -->
+      <p>
+        Your result: <b>{{ result.calcMoves }}</b> moves by
+        <b>{{ result.gameTime | dateFormat }}</b>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-  console.log(this);
+  import { dateFormat } from './../utils';
+
   export default {
-    methods: {
-      close: function() {
-        console.log('close');
-      },
+    props: {
+      result: Object,
+    },
+    filters: {
+      dateFormat: dateFormat,
     },
   };
 </script>
+
 <style lang="scss">
   .wonPopup {
     position: absolute;
@@ -38,6 +40,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: #665100;
+      text-align: center;
     }
   }
 </style>

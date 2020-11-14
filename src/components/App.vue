@@ -34,6 +34,9 @@
   h1 {
     text-align: center;
   }
+  h3 {
+    text-align: center;
+  }
   .btn-default {
     font-weight: 500;
     font-size: 0.875rem;
