@@ -24,18 +24,15 @@
   @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
   #app {
     position: relative;
+    h1 {
+      text-align: center;
+    }
   }
   body {
     color: #443600;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
     min-width: 300px;
-  }
-  h1 {
-    text-align: center;
-  }
-  h3 {
-    text-align: center;
   }
   .btn-default {
     font-weight: 500;

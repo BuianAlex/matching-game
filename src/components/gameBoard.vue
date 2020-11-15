@@ -5,13 +5,13 @@
         <span>time: {{ gameTime | dateFormat }}</span>
         <span>moves: {{ calcMoves }}</span>
       </div>
-      <start-popup
+      <StartPopup
         v-if="!isGameStarted && sholdBeFind != 0"
         @start="startGame"
       />
-      <won-popup
+      <WonPopup
         v-if="sholdBeFind == 0"
-        v-bind:result="{ gameTime, calcMoves, compareRecults }"
+        :result="{ gameTime, calcMoves, compareRecults }"
       />
       <ul class="cards-list">
         <li
@@ -60,8 +60,8 @@
 
   export default {
     components: {
-      'start-popup': StartPopup,
-      'won-popup': WonPopup,
+      StartPopup,
+      WonPopup,
     },
     data() {
       return {
@@ -263,7 +263,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       color: #fff;
-      @media (min-width: 576px) {
+      @media (min-width: 900px) {
         font-size: 3rem;
       }
       font-size: 2rem;

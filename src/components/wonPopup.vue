@@ -39,6 +39,9 @@
     height: calc(100% - 48px);
     background-color: #dbfff8;
     z-index: 10;
+    h1 {
+      text-align: center;
+    }
     &-message {
       position: absolute;
       width: 90%;
