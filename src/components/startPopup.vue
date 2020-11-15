@@ -16,15 +16,15 @@
 <style lang="scss">
   .popup {
     position: absolute;
-    top: 49px;
     right: 0;
     width: 100%;
-    height: calc(100% - 49px);
+    height: calc(100% - 4rem);
     background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
     z-index: 10;
     button {
       position: absolute;
-      top: 50%;
+      top: 48%;
       left: 50%;
       transform: translate(-50%, -50%);
       background-color: #2196f3;

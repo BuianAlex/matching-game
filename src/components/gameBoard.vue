@@ -19,7 +19,7 @@
           v-for="(card, index) in gameCards"
           :key="index"
           :class="[cardClass, card.isHasPair ? 'card-with-pair' : '']"
-          @click="showCard(card)"
+          @click="showCard(index)"
         >
           <span v-if="!card.isHidden" class="card-content">
             {{ card.value }}
@@ -33,7 +33,7 @@
         @click="setNewGame"
         v-if="isGameStarted || sholdBeFind == 0"
       >
-        restart
+        new game
       </button>
     </div>
     <div class="settings">
@@ -42,7 +42,6 @@
         class="btn-default"
         v-for="(btn, index) in sizeButtons"
         :key="index"
-        :class="cardClass"
         :disabled="boardSize == btn.size"
         @click="setBoardSize(btn.size)"
       >
@@ -75,7 +74,7 @@
         userChoise: [],
         calcMoves: 0,
         sholdBeFind: 0,
-        isClickOn: true,
+        isClickAllowed: true,
         compareRecults: {},
       };
     },
@@ -117,25 +116,26 @@
           setTimeout(this.timer, 1000);
         }
       },
-      showCard: function(card) {
-        if (this.isClickOn) {
-          card.isHidden = false;
-          this.userChoise.push(card);
+      showCard: function(index) {
+        if (this.isClickAllowed && this.userChoise.indexOf(index) === -1) {
+          this.userChoise.push(index);
+          this.gameCards[index].isHidden = false;
           if (this.userChoise.length === 2) {
-            this.isClickOn = false;
-            let cardOne = this.userChoise[0];
-            let cardTwo = this.userChoise[1];
+            this.isClickAllowed = false;
+            const cardOne = this.gameCards[this.userChoise[0]];
+            const cardTwo = this.gameCards[this.userChoise[1]];
             if (cardOne.value !== cardTwo.value) {
               setTimeout(() => {
                 cardTwo.isHidden = true;
                 cardOne.isHidden = true;
-                this.isClickOn = true;
+                this.isClickAllowed = true;
               }, gameSpeed);
             } else {
               cardTwo.isHasPair = true;
               cardOne.isHasPair = true;
               this.sholdBeFind -= 1;
-              this.isClickOn = true;
+              this.isClickAllowed = true;
+              console.log(this.gameCards[this.userChoise[0]]);
             }
             this.userChoise = [];
             this.calcMoves += 1;
@@ -185,6 +185,7 @@
     position: relative;
     width: 95%;
     margin: 0 auto;
+    overflow: hidden;
     @media (min-width: 768px) {
       width: 50%;
     }
@@ -206,7 +207,7 @@
     flex-wrap: wrap;
     width: 100%;
     margin: 0;
-    padding-left: 0.5%;
+    padding-left: 0.25%;
   }
   .card {
     display: block;
@@ -231,13 +232,13 @@
     }
     &-30 {
       @media (max-width: 372px) {
-        width: calc(21% - 1% - 10px);
+        width: calc(19% - 1% - 10px);
       }
       width: calc(18% - 1.25% - 12px);
     }
     &-36 {
       @media (max-width: 372px) {
-        width: calc(21% - 1.5% - 14px);
+        width: calc(19% - 1% - 10px);
       }
       width: calc(18% - 1.25% - 12px);
     }
@@ -279,7 +280,7 @@
     flex-wrap: wrap;
     background-color: cornsilk;
     width: 95%;
-    margin: 0 auto;
+    margin: 0 auto 1rem;
     padding: 50px 0 1rem;
     border-radius: 4px;
     @media (min-width: 768px) {

@@ -32,7 +32,9 @@
     color: #443600;
     font-family: 'Roboto', sans-serif;
     box-sizing: border-box;
-    min-width: 300px;
+    width: 100vw;
+    margin: 0;
+    // min-width: 300px;
   }
   .btn-default {
     font-weight: 500;

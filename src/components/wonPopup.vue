@@ -1,13 +1,13 @@
 <template>
   <div class="wonPopup">
     <div class="wonPopup-message">
-      <h1>Congrate you are Won!</h1>
+      <h1>Congratulations! You have won!</h1>
       <p>
-        Your result: <b>{{ result.calcMoves }}</b> moves by
+        Your result: <b>{{ result.calcMoves }}</b> moves in
         <b>{{ result.gameTime | dateFormat }}</b>
       </p>
       <p v-if="!result.compareRecults.isRecord">
-        Old record result:
+        Your best score is:
         <b>{{ result.compareRecults.oldRecord.moves }}</b> moves by
         <b>{{ result.compareRecults.oldRecord.time | dateFormat }}</b>
       </p>
